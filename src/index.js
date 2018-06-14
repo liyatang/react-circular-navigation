@@ -5,21 +5,13 @@ import './style.less';
 import _ from 'lodash';
 
 class CircularNavigation extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: true
-        };
-    }
-
     handleClick = () => {
-        this.setState({
-            open: !this.state.open
-        });
+        this.props.onChange();
     };
 
     render() {
         const {
+            active,
             size,
             sectors,
             rotate,
@@ -30,7 +22,6 @@ class CircularNavigation extends React.Component {
             children,
             ...rest
         } = this.props;
-        const {open} = this.state;
 
         let transform = `rotate(0deg) skew(${skew}deg)`;
         const transition = `all ${time} ease`;
@@ -38,7 +29,7 @@ class CircularNavigation extends React.Component {
 
         return (
             <div {...rest} className={classNames("react-circular-navigation", className, {
-                active: open
+                active
             })}>
                 <div className="react-circular-navigation-btn">
                     <div onClick={this.handleClick} style={{
@@ -47,9 +38,9 @@ class CircularNavigation extends React.Component {
                     }}>{children}</div>
                 </div>
                 <div className={classNames("react-circular-navigation-wrapper", {
-                    'opened-nav': open
+                    'opened-nav': active
                 })} style={{
-                    transition: open ? transition : transitionDelay
+                    transition: active ? transition : transitionDelay
                 }}>
                     <ul>
                         {_.map(sectors, (sector, i) => (
@@ -58,8 +49,8 @@ class CircularNavigation extends React.Component {
                                 height: size + 'px',
                                 left: -size + 'px',
                                 top: -size + 'px',
-                                transition: open ? transitionDelay : transition,
-                                transform: open ? `rotate(${i * rotate + i * 2}deg) skew(${skew}deg)` : transform
+                                transition: active ? transitionDelay : transition,
+                                transform: active ? `rotate(${i * rotate + i * 2}deg) skew(${skew}deg)` : transform
                             }}>
                                 <div style={{
                                     width: 2 * size + 'px',
@@ -79,6 +70,8 @@ class CircularNavigation extends React.Component {
 }
 
 CircularNavigation.propTypes = {
+    active: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired,
     size: PropTypes.number.isRequired,
     sectors: PropTypes.array.isRequired,
     rotate: PropTypes.number,
