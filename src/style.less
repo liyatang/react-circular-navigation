@@ -1,0 +1,42 @@
+.react-circular-navigation {
+  &-btn {
+    position: absolute;
+    z-index: 11;
+  }
+
+  &-wrapper {
+    position: absolute;
+    z-index: 10;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: transparent;
+    opacity: 0;
+    transform: scale(0.1) rotate(180deg);
+  }
+
+  &-wrapper > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  &-wrapper > ul > li {
+    cursor: pointer;
+    position: absolute;
+    overflow: hidden;
+    transform-origin: 100% 100%;
+  }
+
+  &-wrapper > ul > li > div {
+    border-radius: 50%;
+    text-align: center;
+  }
+
+  &.active {
+    .react-circular-navigation-wrapper {
+      border-radius: 50%;
+      opacity: 1;
+      transform: scale(1) rotate(180deg);
+    }
+  }
+}
