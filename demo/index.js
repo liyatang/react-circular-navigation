@@ -41,7 +41,8 @@ class App extends React.Component {
                     style={{
                         position: 'fixed',
                         top: '400px',
-                        left: '400px'
+                        left: '400px',
+                        zIndex: '20'
                     }}
                     sectors={_.map(oneData, (v, i) => (
                         <div style={{color: 'white'}}
@@ -73,7 +74,7 @@ class App extends React.Component {
                     sectors={_.map(oneData, (v, i) => (
                         <div style={{color: 'white'}}
                              onClick={this.handleClick.bind(this, 'one', i)}
-                        >{v}</div>
+                        >a{v}</div>
                     ))}
                 >
                     <button style={{
