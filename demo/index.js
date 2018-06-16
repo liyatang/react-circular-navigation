@@ -69,6 +69,7 @@ class App extends React.Component {
                         <div style={{color: 'white'}}>{v}</div>
                     ))}
                     onClick={this.handleClick.bind(this, 'two')}
+                    sectorBackgroundColor="red"
                 >
                     <button style={{
                         width: '40px',

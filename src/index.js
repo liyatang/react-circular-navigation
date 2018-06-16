@@ -36,6 +36,7 @@ class CircularNavigation extends React.Component {
             skew,
             percentage,
             time,
+            sectorBackgroundColor,
             className,
             children,
             onClick, // eslint-disable-line
@@ -91,7 +92,7 @@ class CircularNavigation extends React.Component {
                                             height: 2 * size + 'px',
                                             right: -size + 'px',
                                             bottom: -size + 'px',
-                                            background: `radial-gradient(transparent ${percentage}, black ${percentage})`,
+                                            background: `radial-gradient(transparent ${percentage}, ${sectorBackgroundColor} ${percentage})`,
                                             transform: `skew(-${skew}deg) rotate(-${90 - rotate / 2}deg) scale(1)`
                                         }}
                                         onClick={this.handleClick.bind(this, sector, i)}
@@ -112,6 +113,7 @@ CircularNavigation.propTypes = {
     onClick: PropTypes.func.isRequired,
     size: PropTypes.number.isRequired,
     sectors: PropTypes.array.isRequired,
+    sectorBackgroundColor: PropTypes.string,
     rotate: PropTypes.number,
     skew: PropTypes.number,
     percentage: PropTypes.string,
@@ -123,6 +125,7 @@ CircularNavigation.defaultProps = {
     rotate: 30,
     skew: 60,
     percentage: '45%',
+    sectorBackgroundColor: 'black',
     time: '0.3s'
 };
 
