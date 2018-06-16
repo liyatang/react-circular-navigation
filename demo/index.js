@@ -7,11 +7,6 @@ import _ from 'lodash';
 
 const oneData = [1, 2, 3, 4];
 
-
-window.document.body.addEventListener('click', e => {
-    console.log(e.target);
-});
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -26,8 +21,8 @@ class App extends React.Component {
         });
     };
 
-    handleClick = (type, i) => {
-        console.log(type, i);
+    handleClick = (type, sector, i) => {
+        console.log(type, sector, i);
     };
 
     render() {
@@ -44,11 +39,10 @@ class App extends React.Component {
                         left: '400px',
                         zIndex: '20'
                     }}
-                    sectors={_.map(oneData, (v, i) => (
-                        <div style={{color: 'white'}}
-                             onClick={this.handleClick.bind(this, 'one', i)}
-                        >{v}</div>
+                    sectors={_.map(oneData, (v) => (
+                        <div style={{color: 'white'}}>{v}</div>
                     ))}
+                    onClick={this.handleClick.bind(this, 'one')}
                 >
                     <button style={{
                         width: '40px',
@@ -71,11 +65,10 @@ class App extends React.Component {
                     rotate={20}
                     skew={70}
                     percentage={'52%'}
-                    sectors={_.map(oneData, (v, i) => (
-                        <div style={{color: 'white'}}
-                             onClick={this.handleClick.bind(this, 'one', i)}
-                        >a{v}</div>
+                    sectors={_.map(oneData, (v) => (
+                        <div style={{color: 'white'}}>{v}</div>
                     ))}
+                    onClick={this.handleClick.bind(this, 'two')}
                 >
                     <button style={{
                         width: '40px',

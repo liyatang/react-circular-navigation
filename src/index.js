@@ -5,7 +5,25 @@ import './style.less';
 import _ from 'lodash';
 
 class CircularNavigation extends React.Component {
-    handleClick = () => {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeIndex: 0
+        };
+    }
+
+    handleClick = (sector, i) => {
+        this.setState({
+            activeIndex: i
+        });
+
+        this.props.onClick(sector, i);
+    };
+
+    handleChange = () => {
+        this.setState({
+            activeIndex: 0
+        });
         this.props.onChange();
     };
 
@@ -20,8 +38,12 @@ class CircularNavigation extends React.Component {
             time,
             className,
             children,
+            onClick, // eslint-disable-line
             ...rest
         } = this.props;
+        const {
+            activeIndex
+        } = this.state;
 
         let transform = `rotate(0deg) skew(${skew}deg)`;
         const transition = `all ${time} ease`;
@@ -33,7 +55,7 @@ class CircularNavigation extends React.Component {
             })}>
 
                 <div className="react-circular-navigation-btn">
-                    <div onClick={this.handleClick} style={{
+                    <div onClick={this.handleChange} style={{
                         marginTop: '-50%',
                         marginLeft: '-50%'
                     }}>{children}</div>
@@ -61,16 +83,19 @@ class CircularNavigation extends React.Component {
                                     left: -size + 'px',
                                     top: -size + 'px',
                                     transition: active ? transitionDelay : transition,
-                                    transform: active ? `rotate(${i * rotate + i * 2}deg) skew(${skew}deg)` : transform
+                                    transform: active ? `rotate(${(i - activeIndex) * rotate + (i - activeIndex) * 2}deg) skew(${skew}deg)` : transform
                                 }}>
-                                    <div style={{
-                                        width: 2 * size + 'px',
-                                        height: 2 * size + 'px',
-                                        right: -size + 'px',
-                                        bottom: -size + 'px',
-                                        background: `radial-gradient(transparent ${percentage}, black ${percentage})`,
-                                        transform: `skew(-${skew}deg) rotate(-${90 - rotate / 2}deg) scale(1)`
-                                    }}>{sector}</div>
+                                    <div
+                                        style={{
+                                            width: 2 * size + 'px',
+                                            height: 2 * size + 'px',
+                                            right: -size + 'px',
+                                            bottom: -size + 'px',
+                                            background: `radial-gradient(transparent ${percentage}, black ${percentage})`,
+                                            transform: `skew(-${skew}deg) rotate(-${90 - rotate / 2}deg) scale(1)`
+                                        }}
+                                        onClick={this.handleClick.bind(this, sector, i)}
+                                    >{sector}</div>
                                 </li>
                             ))}
                         </ul>
@@ -84,6 +109,7 @@ class CircularNavigation extends React.Component {
 CircularNavigation.propTypes = {
     active: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired,
     size: PropTypes.number.isRequired,
     sectors: PropTypes.array.isRequired,
     rotate: PropTypes.number,
